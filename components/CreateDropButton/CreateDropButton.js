@@ -68,10 +68,8 @@ const CreateDropButton = () => {
       )
       .then(async (tx) => {
         const receipt = await tx.wait()
-        console.log(receipt)
         const dropAddress = receipt.events.find((e) => e.event === 'CreatedDrop').args
           .editionContractAddress
-        console.log('dropAddress', dropAddress)
         toast.success(
           <a target="__blank" href={`/${activeChain.id}/${dropAddress}`}>
             view drop here
