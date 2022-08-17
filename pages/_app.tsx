@@ -1,6 +1,8 @@
 import '@rainbow-me/rainbowkit/styles.css'
 import '@zoralabs/zord/index.css'
 import 'styles/global.css'
+import 'react-toastify/dist/ReactToastify.css';
+import 'degen/styles'
 
 import { getDefaultWallets, RainbowKitProvider, lightTheme } from '@rainbow-me/rainbowkit'
 import { configureChains, createClient, WagmiConfig, chain } from 'wagmi'
@@ -8,7 +10,8 @@ import { publicProvider } from 'wagmi/providers/public'
 import { contractAddress } from '@lib/constants'
 import { ThemeProvider } from 'degen'
 import ERC721DropContractProvider from 'providers/ERC721DropProvider'
-import 'degen/styles'
+import { ToastContainer } from 'react-toastify';
+
 
 const { chains, provider } = configureChains(
   [
@@ -42,6 +45,7 @@ function App({ Component, pageProps }) {
           <ERC721DropContractProvider erc721DropAddress={contractAddress}>
             <Component {...pageProps} />
           </ERC721DropContractProvider>
+          <ToastContainer />
         </RainbowKitProvider>
       </WagmiConfig>    
     </ThemeProvider>

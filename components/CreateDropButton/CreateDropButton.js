@@ -1,14 +1,16 @@
-import { Box, Button, Input, Text } from 'degen'
+import { Box, Button, Input, Spinner, Text } from 'degen'
 import { useAccount, useSigner, useNetwork } from 'wagmi'
 import { ethers } from 'ethers'
 import abi from '@lib/ZoraNFTCreatorV1-abi.json'
 import getZoraNFTCreatorV1Address from '@lib/getZoraNFTCreatorV1Address'
 import { useState } from 'react'
+import { toast } from 'react-toastify'
 
 const CreateDropButton = () => {
   const { data: account } = useAccount()
   const { activeChain } = useNetwork()
   const { data: signer } = useSigner()
+  const [loading, setLoading] = useState(false)
   const [name, setName] = useState('sweets the engineer')
   const [symbol, setSymbol] = useState('MUSIC')
   const [defaultAdmin, setDefaultAdmin] = useState(account?.address)
@@ -34,15 +36,15 @@ const CreateDropButton = () => {
   const contract = new ethers.Contract(contractAddress, abi, signer)
 
   const handleClick = async () => {
+    setLoading(true)
     await createDrop()
+    setLoading(false)
   }
 
   const createDrop = () => {
-    console.log('metadataURIBase', metadataURIBase)
     const uriBase = metadataURIBase.endsWith('?')
       ? metadataURIBase
       : metadataURIBase + '?'
-    console.log('uriBase', uriBase)
 
     return contract
       .createDrop(
@@ -66,11 +68,21 @@ const CreateDropButton = () => {
       )
       .then(async (tx) => {
         const receipt = await tx.wait()
+        console.log(receipt)
+        const dropAddress = receipt.events.find((e) => e.event === 'CreatedDrop').args
+          .editionContractAddress
+        console.log('dropAddress', dropAddress)
+        toast.success(
+          <a target="__blank" href={`/${activeChain.id}/${dropAddress}`}>
+            view drop here
+          </a>
+        )
         return receipt
       })
+      .catch(console.error)
   }
   return (
-    <Box display="flex" flexDirection="column" width={{ md: '180' }}>
+    <Box display="flex" flexDirection="column" width={{ md: '180' }} alignItems="center">
       <Text>Metadata</Text>
       <Input
         placeholder={metadataURIBase}
@@ -154,7 +166,9 @@ const CreateDropButton = () => {
         onChange={(e) => setPresaleMerkleRoot(e.target.value)}
       />
 
-      <Button onClick={handleClick}>Create Drop</Button>
+      <Button width="full" disabled={loading} onClick={handleClick}>
+        {loading ? <Spinner /> : 'Create Drop'}
+      </Button>
     </Box>
   )
 }
