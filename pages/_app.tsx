@@ -30,7 +30,7 @@ const wagmiClient = createClient({
 
 function App({ Component, pageProps }) {
   return (
-    <ThemeProvider>
+    <ThemeProvider defaultMode="dark" defaultAccent="yellow">
       <WagmiConfig client={wagmiClient}>
         <RainbowKitProvider
           chains={chains}
