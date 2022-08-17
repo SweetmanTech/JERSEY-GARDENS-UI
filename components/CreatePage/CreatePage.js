@@ -1,18 +1,27 @@
 import { ConnectButton } from '@rainbow-me/rainbowkit'
-import { Box } from 'degen'
+import { Box, Text } from 'degen'
 import CreateDropButton from '@components/CreateDropButton'
 
 const CreatePage = () => {
   return (
     <Box
+      backgroundColor="black"
       display="flex"
-      padding="6"
-      marginBottom="12"
+      flexDirection="column"
       alignItems="center"
-      justifyContent="space-between"
     >
+      <Box
+        display="flex"
+        padding="6"
+        marginBottom="12"
+        minWidth="full"
+        alignItems="center"
+        justifyContent="space-between"
+      >
+        <Text>Vol FM - Music NFT Drops</Text>
+        <ConnectButton />
+      </Box>
       <CreateDropButton />
-      <ConnectButton />
     </Box>
   )
 }
