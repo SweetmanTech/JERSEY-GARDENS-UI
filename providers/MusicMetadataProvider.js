@@ -1,10 +1,9 @@
 import React, { useContext, useState } from 'react'
-import exampleMetadata from '@lib/musicNFTMetadata-example-1.json'
 
 export const MusicMetadataContext = React.createContext({})
 
 function MusicMetadataProvider({ children }) {
-  const [metadata, setMetadata] = useState(exampleMetadata)
+  const [metadata, setMetadata] = useState({})
 
   return (
     <MusicMetadataContext.Provider value={{ metadata, setMetadata }}>
