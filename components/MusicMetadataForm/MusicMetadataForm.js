@@ -4,7 +4,6 @@ import { MediaPicker } from '@components/MediaPicker.tsx'
 
 const MusicMetadataForm = () => {
   const { metadata, setMetadata } = useMusicMetadata()
-  console.log('CONTEXT', metadata)
 
   return (
     <>
@@ -43,7 +42,6 @@ const MusicMetadataForm = () => {
         label="Upload your sound"
         onError={console.error}
         onChange={(e) => {
-          console.log('AUDIO MIME TYPE', e.type)
           const audioMetadata = {
             animation_url: e,
             mimeType: e.type,
