@@ -23,14 +23,15 @@
       "@components/*": ["components/*"],
       "@contracts/*": ["contracts/*"],
       "@lib/*": ["lib/*"],
-      "@hooks/*": ["hooks/*"]
+      "@hooks/*": ["hooks/*"],
+      "@providers/*": ["providers/*"]
     }
   },
   "include": [
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx"
-  ],
+, "providers/MusicMetadataProvider.js"  ],
   "exclude": [
     "node_modules"
   ]
