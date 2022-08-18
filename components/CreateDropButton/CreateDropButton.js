@@ -5,8 +5,12 @@ import abi from '@lib/ZoraNFTCreatorV1-abi.json'
 import getZoraNFTCreatorV1Address from '@lib/getZoraNFTCreatorV1Address'
 import { useState } from 'react'
 import { toast } from 'react-toastify'
+import MusicMetadataForm from '@components/MusicMetadataForm'
+import { useMusicMetadata } from '@providers/MusicMetadataProvider'
+import { NFTStorage } from 'nft.storage'
 
 const CreateDropButton = () => {
+  const { metadata } = useMusicMetadata()
   const { data: account } = useAccount()
   const { activeChain } = useNetwork()
   const { data: signer } = useSigner()
@@ -37,15 +41,34 @@ const CreateDropButton = () => {
 
   const handleClick = async () => {
     setLoading(true)
-    await createDrop()
+    const ipfs = await createIpfsMetadata()
+    if (ipfs.error) {
+      toast.error(ipfs.error)
+    } else {
+      toast.success(
+        <a href={ipfs.url} target="__blank">
+          IPFS Metadata Created (view here)
+        </a>
+      )
+      const uriBase = ipfs.url + '?'
+      await createDrop(uriBase)
+    }
     setLoading(false)
   }
 
-  const createDrop = () => {
-    const uriBase = metadataURIBase.endsWith('?')
-      ? metadataURIBase
-      : metadataURIBase + '?'
+  const createIpfsMetadata = async () => {
+    if (!metadata.image) {
+      return { error: 'Please upload an image' }
+    }
+    const client = new NFTStorage({ token: process.env.NEXT_PUBLIC_NFT_STORAGE_API_KEY })
+    const ipfs = await client
+      .store(metadata)
+      .then((response) => response)
+      .catch((error) => ({ error }))
+    return ipfs
+  }
 
+  const createDrop = (uriBase) => {
     return contract
       .createDrop(
         name,
@@ -82,11 +105,7 @@ const CreateDropButton = () => {
   return (
     <Box display="flex" flexDirection="column" width={{ md: '180' }} alignItems="center">
       <Text>Metadata</Text>
-      <Input
-        placeholder={metadataURIBase}
-        label="metadata URI base"
-        onChange={(e) => setMetadataURIBase(e.target.value)}
-      />
+      <MusicMetadataForm />
       <Input
         placeholder={metadataContractURI}
         label="metadata contract URI"
