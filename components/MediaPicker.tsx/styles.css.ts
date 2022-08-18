@@ -134,15 +134,3 @@ export const cover = style([
     objectPosition: 'center',
   }),
 ])
-
-// export const removeButton = style({
-//   background: `linear-gradient(0deg, ${rgb(
-//     vars.mode.colors.background,
-//     '0.8',
-//   )}, ${rgb(vars.mode.colors.background, '0.8')}), ${rgb(
-//     vars.mode.colors.foreground,
-//     '0.075',
-//   )}`,
-//   backdropFilter: 'blur(4px)',
-//   color: rgb(vars.mode.colors.foreground, '0.4'),
-// })
