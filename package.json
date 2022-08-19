@@ -33,7 +33,7 @@
     "keccak256": "^1.0.6",
     "lodash": "^4.17.21",
     "merkletreejs": "^0.2.30",
-    "music-metadata-ipfs": "^1.0.13",
+    "music-metadata-ipfs": "^1.0.20",
     "next": "^12.1.6",
     "node-fetch": "^3.2.6",
     "react": "^17.0.2",

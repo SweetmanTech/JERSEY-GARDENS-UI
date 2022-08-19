@@ -6,11 +6,10 @@ import getZoraNFTCreatorV1Address from '@lib/getZoraNFTCreatorV1Address'
 import { useState } from 'react'
 import { toast } from 'react-toastify'
 import MusicMetadataForm from '@components/MusicMetadataForm'
-import { NFTStorage } from 'nft.storage'
 import { useMusicMetadata } from 'music-metadata-ipfs'
 
 const CreateDropButton = () => {
-  const { metadata } = useMusicMetadata()
+  const { createIpfsMetadata } = useMusicMetadata()
   const { data: account } = useAccount()
   const { activeChain } = useNetwork()
   const { data: signer } = useSigner()
@@ -42,7 +41,8 @@ const CreateDropButton = () => {
   const handleClick = async () => {
     setLoading(true)
     const ipfs = await createIpfsMetadata()
-    if (ipfs.error) {
+
+    if (ipfs?.error) {
       toast.error(ipfs.error)
     } else {
       toast.success(
@@ -54,18 +54,6 @@ const CreateDropButton = () => {
       await createDrop(uriBase)
     }
     setLoading(false)
-  }
-
-  const createIpfsMetadata = async () => {
-    if (!metadata.image) {
-      return { error: 'Please upload an image' }
-    }
-    const client = new NFTStorage({ token: process.env.NEXT_PUBLIC_NFT_STORAGE_API_KEY })
-    const ipfs = await client
-      .store(metadata)
-      .then((response) => response)
-      .catch((error) => ({ error }))
-    return ipfs
   }
 
   const createDrop = (uriBase) => {
