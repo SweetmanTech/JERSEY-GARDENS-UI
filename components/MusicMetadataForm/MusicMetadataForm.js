@@ -1,4 +1,4 @@
-import { Input, Textarea } from 'degen'
+import { Input, Text, Textarea } from 'degen'
 import { MediaPicker } from '@components/MediaPicker.tsx'
 import { useMusicMetadata } from 'music-metadata-ipfs'
 
@@ -140,14 +140,103 @@ const MusicMetadataForm = () => {
         onChange={(e) => setMetadata({ ...metadata, locationCreated: e.target.value })}
       />
       <Input
-        placeholder={metadata?.project?.title}
-        label="project title"
+        placeholder="isrc code from distribution company"
+        label="isrc"
         onChange={(e) =>
           setMetadata({
             ...metadata,
-            project: { ...metadata.project, title: e.target.value },
+            isrc: e.target.value,
           })
         }
+      />
+      <MediaPicker
+        id="artwork"
+        compact
+        accept="image/jpeg, image/png, image/webp, image/gif"
+        label="Track artwork"
+        onError={console.error}
+        onChange={(e) => {
+          const artworkMetadata = {
+            uri: e,
+            mimeType: e.type,
+          }
+          setMetadata({
+            ...metadata,
+            artwork: artworkMetadata,
+          })
+        }}
+      />
+      <Textarea
+        placeholder="my lyrics"
+        label="lyrics"
+        onChange={(e) =>
+          setMetadata({
+            ...metadata,
+            lyrics: { text: e.target.value },
+          })
+        }
+      />
+      <MediaPicker
+        id="visualizer"
+        compact
+        accept="image/jpeg, image/png, image/webp, image/gif"
+        label="Track visualizer"
+        onError={console.error}
+        onChange={(e) => {
+          const visualizerMetadata = {
+            uri: e,
+            mimeType: e.type,
+          }
+          setMetadata({
+            ...metadata,
+            visualizer: visualizerMetadata,
+          })
+        }}
+      />
+      <Input
+        placeholder="April 20, 2022"
+        label="original release date"
+        onChange={(e) =>
+          setMetadata({
+            ...metadata,
+            originalReleaseDate: e.target.value,
+          })
+        }
+      />
+      <Input
+        placeholder="my record label"
+        label="record label (track)"
+        onChange={(e) =>
+          setMetadata({
+            ...metadata,
+            recordLabel: e.target.value,
+          })
+        }
+      />
+      <Input
+        placeholder="my publisher"
+        label="publisher (track)"
+        onChange={(e) =>
+          setMetadata({
+            ...metadata,
+            publisher: e.target.value,
+          })
+        }
+      />
+      <Text>Project Metadata</Text>
+      <Input
+        placeholder={metadata?.project?.title}
+        label="project title"
+        onChange={(e) => {
+          const projectTitleMetadata = {
+            project: { ...metadata.project, title: e.target.value },
+            attributes: { ...metadata.attributes, project: e.target.value },
+          }
+          setMetadata({
+            ...metadata,
+            ...projectTitleMetadata,
+          })
+        }}
       />
       <MediaPicker
         id="projectArtwork"
@@ -170,7 +259,7 @@ const MusicMetadataForm = () => {
         }}
       />
       <Textarea
-        placeholder={metadata.description}
+        placeholder="project description"
         label="project description"
         onChange={(e) =>
           setMetadata({
@@ -202,12 +291,16 @@ const MusicMetadataForm = () => {
       <Input
         placeholder="my record label"
         label="project record label"
-        onChange={(e) =>
+        onChange={(e) => {
+          const projectLabelMetadata = {
+            project: { ...metadata.project, recordLabel: e.target.value },
+            attributes: { ...metadata.attributes, recordLabel: e.target.value },
+          }
           setMetadata({
             ...metadata,
-            project: { ...metadata.project, recordLabel: e.target.value },
+            ...projectLabelMetadata,
           })
-        }
+        }}
       />
       <Input
         placeholder="my publisher"
