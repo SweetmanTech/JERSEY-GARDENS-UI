@@ -1,6 +1,6 @@
 import { Input, Textarea } from 'degen'
-import { useMusicMetadata } from '@providers/MusicMetadataProvider'
 import { MediaPicker } from '@components/MediaPicker.tsx'
+import { useMusicMetadata } from 'music-metadata-ipfs'
 
 const MusicMetadataForm = () => {
   const { metadata, setMetadata } = useMusicMetadata()
