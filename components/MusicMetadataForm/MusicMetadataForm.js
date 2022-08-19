@@ -123,6 +123,112 @@ const MusicMetadataForm = () => {
           setMetadata({ ...metadata, ...keyMetadata })
         }}
       />
+      <Input
+        placeholder={metadata.license}
+        label="license"
+        onChange={(e) => {
+          const licenseMetadata = {
+            license: e.target.value,
+            attributes: { ...metadata.attributes, license: e.target.value },
+          }
+          setMetadata({ ...metadata, ...licenseMetadata })
+        }}
+      />
+      <Input
+        placeholder={metadata.locationCreated}
+        label="location created"
+        onChange={(e) => setMetadata({ ...metadata, locationCreated: e.target.value })}
+      />
+      <Input
+        placeholder={metadata?.project?.title}
+        label="project title"
+        onChange={(e) =>
+          setMetadata({
+            ...metadata,
+            project: { ...metadata.project, title: e.target.value },
+          })
+        }
+      />
+      <MediaPicker
+        id="projectArtwork"
+        compact
+        accept="image/jpeg, image/png, image/webp, image/gif"
+        label="Project artwork"
+        onError={console.error}
+        onChange={(e) => {
+          const artworkMetadata = {
+            ...metadata.project,
+            artwork: {
+              uri: e,
+              mimeType: e.type,
+            },
+          }
+          setMetadata({
+            ...metadata,
+            project: artworkMetadata,
+          })
+        }}
+      />
+      <Textarea
+        placeholder={metadata.description}
+        label="project description"
+        onChange={(e) =>
+          setMetadata({
+            ...metadata,
+            project: { ...metadata.project, description: e.target.value },
+          })
+        }
+      />
+      <Input
+        placeholder="Single / EP / Album"
+        label="project type"
+        onChange={(e) =>
+          setMetadata({
+            ...metadata,
+            project: { ...metadata.project, type: e.target.value },
+          })
+        }
+      />
+      <Input
+        placeholder="April 20, 2022"
+        label="project original release date"
+        onChange={(e) =>
+          setMetadata({
+            ...metadata,
+            project: { ...metadata.project, originalReleaseDate: e.target.value },
+          })
+        }
+      />
+      <Input
+        placeholder="my record label"
+        label="project record label"
+        onChange={(e) =>
+          setMetadata({
+            ...metadata,
+            project: { ...metadata.project, recordLabel: e.target.value },
+          })
+        }
+      />
+      <Input
+        placeholder="my publisher"
+        label="project publisher"
+        onChange={(e) =>
+          setMetadata({
+            ...metadata,
+            project: { ...metadata.project, publisher: e.target.value },
+          })
+        }
+      />
+      <Input
+        placeholder="upc code from distribution company"
+        label="project upc"
+        onChange={(e) =>
+          setMetadata({
+            ...metadata,
+            project: { ...metadata.project, upc: e.target.value },
+          })
+        }
+      />
     </>
   )
 }
