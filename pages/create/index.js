@@ -1,5 +1,5 @@
 import CreatePage from '@components/CreatePage/CreatePage'
-import MusicMetadataProvider from '@providers/MusicMetadataProvider'
+import { MusicMetadataProvider } from 'music-metadata-ipfs'
 
 const Create = () => {
   return (
