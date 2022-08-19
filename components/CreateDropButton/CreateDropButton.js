@@ -6,8 +6,8 @@ import getZoraNFTCreatorV1Address from '@lib/getZoraNFTCreatorV1Address'
 import { useState } from 'react'
 import { toast } from 'react-toastify'
 import MusicMetadataForm from '@components/MusicMetadataForm'
-import { useMusicMetadata } from '@providers/MusicMetadataProvider'
 import { NFTStorage } from 'nft.storage'
+import { useMusicMetadata } from 'music-metadata-ipfs'
 
 const CreateDropButton = () => {
   const { metadata } = useMusicMetadata()
