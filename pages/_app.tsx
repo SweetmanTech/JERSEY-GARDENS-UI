@@ -14,7 +14,7 @@ import { ToastContainer } from 'react-toastify';
 
 const { chains, provider } = configureChains(
   [
-    chain.goerli, chain.polygonMumbai
+    chain.goerli, chain.polygonMumbai, chain.polygon
   ],
   [ publicProvider()]
 )
