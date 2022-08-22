@@ -18,8 +18,9 @@ const CreateDropButton = () => {
     } else {
       toast.success(
         <a href={ipfs.url} target="__blank">
-          IPFS Metadata Created (view here)
-        </a>
+          {metadata ? 'Contract ' : 'Song '}IPFS Metadata Created (view here)
+        </a>,
+        { autoClose: false, closeOnClick: false }
       )
       return ipfs.url
     }

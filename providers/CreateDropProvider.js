@@ -58,7 +58,8 @@ export const CreateDropProvider = ({ children }) => {
         toast.success(
           <a target="__blank" href={`/${activeChain.id}/${dropAddress}`}>
             view drop here
-          </a>
+          </a>,
+          { autoClose: false, closeOnClick: false }
         )
         return receipt
       })
