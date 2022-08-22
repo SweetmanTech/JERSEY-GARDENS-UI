@@ -1,12 +1,13 @@
 import CreatePage from '@components/CreatePage/CreatePage'
 import { MusicMetadataProvider } from 'music-metadata-ipfs'
+import { CreateDropProvider } from '@providers/CreateDropProvider'
 
-const Create = () => {
-  return (
-    <MusicMetadataProvider>
+const Create = () => (
+  <MusicMetadataProvider>
+    <CreateDropProvider>
       <CreatePage />
-    </MusicMetadataProvider>
-  )
-}
+    </CreateDropProvider>
+  </MusicMetadataProvider>
+)
 
 export default Create
