@@ -1,9 +1,10 @@
-import { Input, Text, Textarea } from 'degen'
+import { Input, Textarea } from 'degen'
 import { MediaPicker } from '@components/MediaPicker.tsx'
 import { useMusicMetadata } from 'music-metadata-ipfs'
 
 const MusicMetadataForm = () => {
-  const { metadata, setMetadata } = useMusicMetadata()
+  const { metadata, setMetadata, contractMetadata, setContractMetadata } =
+    useMusicMetadata()
 
   return (
     <>
@@ -13,7 +14,10 @@ const MusicMetadataForm = () => {
         accept="image/jpeg, image/png, image/webp, image/gif"
         label="Song cover image"
         onError={console.error}
-        onChange={(e) => setMetadata({ ...metadata, image: e })}
+        onChange={(e) => {
+          setMetadata({ ...metadata, image: e })
+          setContractMetadata({ ...contractMetadata, image: e })
+        }}
       />
       <MediaPicker
         id="song"
@@ -59,13 +63,19 @@ const MusicMetadataForm = () => {
       <Textarea
         placeholder={metadata.description}
         label="song description"
-        onChange={(e) => setMetadata({ ...metadata, description: e.target.value })}
+        onChange={(e) => {
+          setMetadata({ ...metadata, description: e.target.value })
+          setContractMetadata({ ...contractMetadata, description: e.target.value })
+        }}
       />
 
       <Input
         placeholder={metadata.external_url}
         label="external url (shows up as a link in open sea)"
-        onChange={(e) => setMetadata({ ...metadata, external_url: e.target.value })}
+        onChange={(e) => {
+          setMetadata({ ...metadata, external_url: e.target.value })
+          setContractMetadata({ ...contractMetadata, external_link: e.target.value })
+        }}
       />
       <Input
         placeholder={metadata.duration}
@@ -220,105 +230,6 @@ const MusicMetadataForm = () => {
           setMetadata({
             ...metadata,
             publisher: e.target.value,
-          })
-        }
-      />
-      <Text>Project Metadata</Text>
-      <Input
-        placeholder={metadata?.project?.title}
-        label="project title"
-        onChange={(e) => {
-          const projectTitleMetadata = {
-            project: { ...metadata.project, title: e.target.value },
-            attributes: { ...metadata.attributes, project: e.target.value },
-          }
-          setMetadata({
-            ...metadata,
-            ...projectTitleMetadata,
-          })
-        }}
-      />
-      <MediaPicker
-        id="projectArtwork"
-        compact
-        accept="image/jpeg, image/png, image/webp, image/gif"
-        label="Project artwork"
-        onError={console.error}
-        onChange={(e) => {
-          const artworkMetadata = {
-            ...metadata.project,
-            artwork: {
-              uri: e,
-              mimeType: e.type,
-            },
-          }
-          setMetadata({
-            ...metadata,
-            project: artworkMetadata,
-          })
-        }}
-      />
-      <Textarea
-        placeholder="project description"
-        label="project description"
-        onChange={(e) =>
-          setMetadata({
-            ...metadata,
-            project: { ...metadata.project, description: e.target.value },
-          })
-        }
-      />
-      <Input
-        placeholder="Single / EP / Album"
-        label="project type"
-        onChange={(e) =>
-          setMetadata({
-            ...metadata,
-            project: { ...metadata.project, type: e.target.value },
-          })
-        }
-      />
-      <Input
-        placeholder="April 20, 2022"
-        label="project original release date"
-        onChange={(e) =>
-          setMetadata({
-            ...metadata,
-            project: { ...metadata.project, originalReleaseDate: e.target.value },
-          })
-        }
-      />
-      <Input
-        placeholder="my record label"
-        label="project record label"
-        onChange={(e) => {
-          const projectLabelMetadata = {
-            project: { ...metadata.project, recordLabel: e.target.value },
-            attributes: { ...metadata.attributes, recordLabel: e.target.value },
-          }
-          setMetadata({
-            ...metadata,
-            ...projectLabelMetadata,
-          })
-        }}
-      />
-      <Input
-        placeholder="my publisher"
-        label="project publisher"
-        onChange={(e) =>
-          setMetadata({
-            ...metadata,
-            project: { ...metadata.project, publisher: e.target.value },
-          })
-        }
-      />
-      <Input
-        placeholder="upc code from distribution company"
-        label="project upc"
-        onChange={(e) =>
-          setMetadata({
-            ...metadata,
-            project: { ...metadata.project, upc: e.target.value },
           })
         }
       />
