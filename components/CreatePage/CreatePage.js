@@ -1,6 +1,6 @@
 import { ConnectButton } from '@rainbow-me/rainbowkit'
 import { Box, Text } from 'degen'
-import CreateDropButton from '@components/CreateDropButton'
+import CreateForm from '@components/CreateForm'
 
 const CreatePage = () => (
   <Box backgroundColor="black" display="flex" flexDirection="column" alignItems="center">
@@ -15,7 +15,7 @@ const CreatePage = () => (
       <Text>Vol FM - Music NFT Drops</Text>
       <ConnectButton />
     </Box>
-    <CreateDropButton />
+    <CreateForm />
   </Box>
 )
 
