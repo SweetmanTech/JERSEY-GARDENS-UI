@@ -23,7 +23,7 @@ const MusicMetadataForm = () => {
         id="song"
         compact
         maxSize={100}
-        accept="audio/wav"
+        accept="audio/wav, video/mp4"
         label="Upload your sound"
         onError={console.error}
         onChange={(e) => {
@@ -188,8 +188,9 @@ const MusicMetadataForm = () => {
       />
       <MediaPicker
         id="visualizer"
+        maxSize={100}
         compact
-        accept="image/jpeg, image/png, image/webp, image/gif"
+        accept="image/jpeg, image/png, image/webp, image/gif, video/mp4"
         label="Track visualizer"
         onError={console.error}
         onChange={(e) => {
