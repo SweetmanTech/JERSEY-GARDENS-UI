@@ -1,5 +1,6 @@
 import { Input, Textarea } from 'degen'
 import { MediaPicker } from '@components/MediaPicker.tsx'
+import Collaborators from '@components/Collaborators'
 import { useMusicMetadata } from 'music-metadata-ipfs'
 
 const MusicMetadataForm = () => {
@@ -234,6 +235,7 @@ const MusicMetadataForm = () => {
           })
         }
       />
+      <Collaborators />
     </>
   )
 }
