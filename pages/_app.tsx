@@ -5,7 +5,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import 'degen/styles'
 
 import { getDefaultWallets, RainbowKitProvider, lightTheme } from '@rainbow-me/rainbowkit'
-import { configureChains, createClient, WagmiConfig, chain } from 'wagmi'
+import { configureChains, createClient, WagmiConfig, allChains } from 'wagmi'
 import { publicProvider } from 'wagmi/providers/public'
 import { ThemeProvider } from 'degen'
 import ERC721DropContractProvider from 'providers/ERC721DropProvider'
@@ -13,7 +13,9 @@ import { ToastContainer } from 'react-toastify';
 
 const { chains, provider } = configureChains(
   [
-    chain.goerli, chain.polygonMumbai, chain.polygon
+    allChains.find(
+      (chain) => chain.id.toString() === process.env.NEXT_PUBLIC_CHAIN_ID
+    )
   ],
   [ publicProvider()]
 )
