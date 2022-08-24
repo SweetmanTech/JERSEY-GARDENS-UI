@@ -7,7 +7,6 @@ import 'degen/styles'
 import { getDefaultWallets, RainbowKitProvider, lightTheme } from '@rainbow-me/rainbowkit'
 import { configureChains, createClient, WagmiConfig, chain } from 'wagmi'
 import { publicProvider } from 'wagmi/providers/public'
-import { contractAddress } from '@lib/constants'
 import { ThemeProvider } from 'degen'
 import ERC721DropContractProvider from 'providers/ERC721DropProvider'
 import { ToastContainer } from 'react-toastify';
@@ -31,7 +30,7 @@ const wagmiClient = createClient({
 })
 
 function App({ Component, pageProps }) {
-  console.log("APP contract address:", contractAddress )
+  console.log("APP contract address:", process.env.NEXT_PUBLIC_CONTRACT_ADDRESS )
   return (
     <ThemeProvider defaultMode="dark" defaultAccent="yellow">
       <WagmiConfig client={wagmiClient}>
@@ -42,7 +41,7 @@ function App({ Component, pageProps }) {
             borderRadius: 'small',
           })}
         >
-          <ERC721DropContractProvider erc721DropAddress={contractAddress}>
+          <ERC721DropContractProvider erc721DropAddress={process.env.NEXT_PUBLIC_CONTRACT_ADDRESS}>
             <Component {...pageProps} />
           </ERC721DropContractProvider>
           <ToastContainer />
