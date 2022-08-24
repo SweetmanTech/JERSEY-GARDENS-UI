@@ -30,7 +30,6 @@ const wagmiClient = createClient({
 })
 
 function App({ Component, pageProps }) {
-  console.log("APP contract address:", process.env.NEXT_PUBLIC_CONTRACT_ADDRESS )
   return (
     <ThemeProvider defaultMode="dark" defaultAccent="yellow">
       <WagmiConfig client={wagmiClient}>
