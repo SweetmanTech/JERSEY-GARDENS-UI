@@ -12,7 +12,6 @@ import {
 } from '@zoralabs/zord'
 import { ConnectWallet } from '@components/ConnectWallet'
 import { NextPage } from 'next'
-import ERC721DropContractProvider from 'providers/ERC721DropProvider'
 import { SubgraphERC721Drop } from 'models/subgraph'
 import { MintStatus } from '@components/MintStatus'
 import { MintDetails } from '@components/MintDetails'
@@ -83,10 +82,6 @@ const HomePage: NextPage<HomePageProps> = ({ collection, chainId }) => {
               />
             </Well>
             <Well className={border} p="x6">
-              <ERC721DropContractProvider
-                erc721DropAddress={collection.address}
-                chainId={chainId}
-              >
                 <Box>
                   {collection != null ? (
                     <>
@@ -128,7 +123,6 @@ const HomePage: NextPage<HomePageProps> = ({ collection, chainId }) => {
                     </Paragraph>
                   )}
                 </Box>
-              </ERC721DropContractProvider>
             </Well>
           </Box>
         </Box>

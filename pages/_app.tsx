@@ -42,8 +42,11 @@ function App({ Component, pageProps }) {
             borderRadius: 'small',
           })}
         >
-          <ERC721DropContractProvider erc721DropAddress={process.env.NEXT_PUBLIC_CONTRACT_ADDRESS}>
-            <Component {...pageProps} />
+          <ERC721DropContractProvider
+                erc721DropAddress={process.env.NEXT_PUBLIC_CONTRACT_ADDRESS}
+                chainId={parseInt(process.env.NEXT_PUBLIC_CHAIN_ID)}
+              >            
+              <Component {...pageProps} />
           </ERC721DropContractProvider>
           <ToastContainer />
         </RainbowKitProvider>
