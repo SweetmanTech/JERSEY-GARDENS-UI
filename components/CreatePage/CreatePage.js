@@ -12,7 +12,7 @@ const CreatePage = () => (
       alignItems="center"
       justifyContent="space-between"
     >
-      <Text>Vol FM - Music NFT Drops</Text>
+      <Text>Jersey Gardens - Free Drop Creator</Text>
       <ConnectButton />
     </Box>
     <CreateForm />

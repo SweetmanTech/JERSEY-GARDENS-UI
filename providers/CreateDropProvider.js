@@ -33,17 +33,10 @@ export const CreateDropProvider = ({ children }) => {
   const contract = new ethers.Contract(contractAddress, abi, signer)
 
   const createDrop = () => {
-    console.log('CREATING DROP')
     const uriBase = musicMetadata + '?'
-    console.log('uriBase', uriBase)
-
-    //'ipfs://bafyreih3xnktib5ghccu4nnnmuzo67m3kssp6mddlpjaqygtawrckepx6q/metadata.json'
     const contractUri = contractMetadata
-    const dropDurationSeconds = 60 * 60 * 24 * lengthOfDrop
-    const publicSaleEnd = publicSaleStart + dropDurationSeconds
-    console.log('publicSaleEnd', publicSaleEnd)
-
-    // 'ipfs://bafyreifkmolfi5cc6agx7mj64dpponmxuino2fymsxmssk6lonps224dam/metadata.json'
+    const dropDurationSeconds = 60 * 60 * 24 * parseInt(lengthOfDrop)
+    const publicSaleEnd = parseInt(publicSaleStart) + dropDurationSeconds
 
     return contract
       .createDrop(

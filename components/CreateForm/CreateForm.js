@@ -10,6 +10,8 @@ const CreateForm = () => {
     setLengthOfDrop,
     setContractMetadata,
     setMusicMetadata,
+    setPublicSaleStart,
+    publicSaleStart,
   } = useCreateDrop()
 
   return (
@@ -47,6 +49,16 @@ const CreateForm = () => {
         label="contract metadata"
         onChange={(e) => {
           setContractMetadata(e.target.value)
+        }}
+      />
+      <Input
+        placeholder={`defaults to now (${publicSaleStart})`}
+        type="number"
+        label="public sale start - seconds (https://www.epochconverter.com/)"
+        min={0}
+        step={1}
+        onChange={(e) => {
+          setPublicSaleStart(e.target.value)
         }}
       />
       <Input
