@@ -11,6 +11,7 @@ import {
   SpinnerOG,
 } from '@zoralabs/zord'
 import { ConnectWallet } from '@components/ConnectWallet'
+import ERC721DropContractProvider from '@providers/ERC721DropProvider'
 import { NextPage } from 'next'
 import { SubgraphERC721Drop } from 'models/subgraph'
 import { MintStatus } from '@components/MintStatus'
@@ -74,7 +75,11 @@ const HomePage: NextPage<HomePageProps> = ({ collection, chainId }) => {
           </Text>
           <Text>{collection?.editionMetadata?.description}</Text>
           <Box mt="x8" mx="auto" style={{ maxWidth: 560 }}>
-            <Well className={border} p="x6" style={{ borderBottom: 0 }}>
+          <ERC721DropContractProvider
+                erc721DropAddress={collection.address}
+                chainId={chainId}
+              >
+<Well className={border} p="x6" style={{ borderBottom: 0 }}>
               <img
                 className={heroImage}
                 src={ipfsImage(collection.editionMetadata.imageURI)}
@@ -124,6 +129,8 @@ const HomePage: NextPage<HomePageProps> = ({ collection, chainId }) => {
                   )}
                 </Box>
             </Well>
+              </ERC721DropContractProvider>
+            
           </Box>
         </Box>
       </Stack>
