@@ -3,7 +3,6 @@ import { useAccount, useNetwork, useSigner } from 'wagmi'
 import { ethers } from 'ethers'
 import getZoraNFTCreatorV1Address from '@lib/getZoraNFTCreatorV1Address'
 import abi from '@lib/ZoraNFTCreatorV1-abi.json'
-import { useMusicMetadata } from 'music-metadata-ipfs'
 import { toast } from 'react-toastify'
 
 export const CreateDropContext = React.createContext({})
@@ -12,15 +11,19 @@ export const CreateDropProvider = ({ children }) => {
   const { data: account } = useAccount()
   const { data: signer } = useSigner()
   const { activeChain } = useNetwork()
+  const [name, setName] = useState('')
   const [symbol, setSymbol] = useState('MUSIC')
   const [defaultAdmin, setDefaultAdmin] = useState(account?.address)
-  const [editionSize, setEditionSize] = useState(1000000)
+  const [musicMetadata, setMusicMetadata] = useState(account?.address)
+  const [contractMetadata, setContractMetadata] = useState(account?.address)
+  const [editionSize, setEditionSize] = useState(100)
   const [royaltyBps, setRoyaltyBps] = useState(300)
+  const [lengthOfDrop, setLengthOfDrop] = useState(31)
   const [fundsRecipient, setFundsRecipient] = useState(account?.address)
-  const [publicSalePrice, setPublicSalePrice] = useState('10000000000000000')
-  const [maxSalePurchasePerAddress, setMaxSalePurchasePerAddress] = useState(0)
+  const [publicSalePrice, setPublicSalePrice] = useState('0')
+  const [maxSalePurchasePerAddress, setMaxSalePurchasePerAddress] = useState(1)
   const [publicSaleStart, setPublicSaleStart] = useState(Math.round(Date.now() / 1000))
-  const [publicSaleEnd, setPublicSaleEnd] = useState(publicSaleStart + 60 * 60 * 24)
+  const [publicSaleEnd, setPublicSaleEnd] = useState(publicSaleStart + 60 * 60 * 24 * 31)
   const [presaleStart, setPresaleStart] = useState(0)
   const [presaleEnd, setPresaleEnd] = useState(0)
   const [presaleMerkleRoot, setPresaleMerkleRoot] = useState(
@@ -28,12 +31,23 @@ export const CreateDropProvider = ({ children }) => {
   )
   const contractAddress = getZoraNFTCreatorV1Address(activeChain?.id)
   const contract = new ethers.Contract(contractAddress, abi, signer)
-  const { contractMetadata } = useMusicMetadata()
 
-  const createDrop = (uriBase, contractUri) => {
+  const createDrop = () => {
+    console.log('CREATING DROP')
+    const uriBase = musicMetadata + '?'
+    console.log('uriBase', uriBase)
+
+    //'ipfs://bafyreih3xnktib5ghccu4nnnmuzo67m3kssp6mddlpjaqygtawrckepx6q/metadata.json'
+    const contractUri = contractMetadata
+    const dropDurationSeconds = 60 * 60 * 24 * lengthOfDrop
+    const publicSaleEnd = publicSaleStart + dropDurationSeconds
+    console.log('publicSaleEnd', publicSaleEnd)
+
+    // 'ipfs://bafyreifkmolfi5cc6agx7mj64dpponmxuino2fymsxmssk6lonps224dam/metadata.json'
+
     return contract
       .createDrop(
-        contractMetadata.name,
+        name,
         symbol,
         defaultAdmin || account?.address,
         editionSize,
@@ -70,6 +84,12 @@ export const CreateDropProvider = ({ children }) => {
     <CreateDropContext.Provider
       value={{
         createDrop,
+        name,
+        setContractMetadata,
+        setMusicMetadata,
+        lengthOfDrop,
+        setLengthOfDrop,
+        setName,
         symbol,
         setSymbol,
         defaultAdmin,
