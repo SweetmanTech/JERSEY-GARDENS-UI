@@ -79,6 +79,7 @@ export const getServerSideProps: GetStaticProps = async (context) => {
       imageURI: metadata.image,
       contractURI: "string",
       animationURI: metadata.animation_url || "",
+      mimeType: metadata.mimeType || "",
     },
     sales: [{
       id: "string",
