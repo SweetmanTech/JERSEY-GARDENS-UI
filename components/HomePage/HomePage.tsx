@@ -31,6 +31,7 @@ const HomePage: NextPage<HomePageProps> = ({ collection, chainId }) => {
   const { presaleExists, saleNotStarted, saleIsFinished } = useSaleStatus({ collection })
   const [showPresale, setShowPresale] = useState(saleNotStarted && !saleIsFinished)
 
+  console.log("collection.editionMetadata", collection.editionMetadata)
   return (
     <>
       <Head>
@@ -100,7 +101,7 @@ const HomePage: NextPage<HomePageProps> = ({ collection, chainId }) => {
           <Text variant="label-lg" >
             Song Metadata:
           </Text> 
-          <Text>{collection?.editionMetadata?.description}</Text>
+          <Text style={{whiteSpace: "pre-line"}}>{collection?.editionMetadata?.description}</Text>
           <Box mt="x8" mx="auto" style={{ maxWidth: 560 }}>
           <ERC721DropContractProvider
                 erc721DropAddress={collection.address}
@@ -112,6 +113,10 @@ const HomePage: NextPage<HomePageProps> = ({ collection, chainId }) => {
                 src={ipfsImage(collection.editionMetadata.imageURI)}
                 alt={collection.name}
               />
+              {collection.editionMetadata?.mimeType?.includes?.("audio") && <audio controls>
+                <source src={ipfsImage(collection.editionMetadata.animationURI)} type={collection.editionMetadata.mimeType} />
+              Your browser does not support the audio element.
+              </audio>}
             </Well>
             <Well className={border} p="x6">
                 <Box>
