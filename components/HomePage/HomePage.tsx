@@ -31,7 +31,6 @@ const HomePage: NextPage<HomePageProps> = ({ collection, chainId }) => {
   const { presaleExists, saleNotStarted, saleIsFinished } = useSaleStatus({ collection })
   const [showPresale, setShowPresale] = useState(saleNotStarted && !saleIsFinished)
 
-  console.log("collection.editionMetadata", collection.editionMetadata)
   return (
     <>
       <Head>
